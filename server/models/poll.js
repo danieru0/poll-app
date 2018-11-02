@@ -1,0 +1,16 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+const PollSchema = new Schema({
+    title: String,
+    date: {type: Date, default: Date.now},
+    pollOptions: [{
+        text: String,
+        votes: Number
+    }],
+    ips: [{
+        ip: Number
+    }]
+});
+
+module.exports = mongoose.model('Poll', PollSchema);
