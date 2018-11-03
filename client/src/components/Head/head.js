@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import ErrorPopup from '../errorPopup/error';
 import './head.css';
 
 class Head extends Component {
@@ -21,27 +22,40 @@ class Head extends Component {
                     text: null
                 }
             ],
-            submitted: true
+            submitted: false,
+            questionError: true,
+            optionsError: true,
+            errorPopup: false
         }
     }
+    
     handleSubmit = (e) => {
         e.preventDefault();
-        this.setState({ submitted: true });
+        //this.setState({ submitted: true });
         let options = [];
         for (let i = 0; i < this.state.optionsInputs.length; i++) {
-            if (this.state.optionsInputs[i].text !== null && this.state.optionsInputs[i].length !== 0 && this.state.optionsInputs[i] !== '') {
+            if (this.state.optionsInputs[i].text) {
                 options.push({
                     text: this.state.optionsInputs[i].text,
                     votes: 0
                 });
             }
         }
-        axios.post('/polls', {
-            title: this.state.question,
-            pollOptions: options
-        }).then((response) => {
-            console.log(response);
-        });
+        if (options.length < 2) {
+            this.setState({ optionsError: true });
+        } else {
+            this.setState({ optionsError: false });
+        }
+        if (!this.state.questionError && options.length >= 2) {
+            axios.post('/polls', {
+                title: this.state.question,
+                pollOptions: options
+            }).then((response) => {
+                console.log(response);
+            });
+        } else {
+            this.setState({ errorPopup: true });
+        }
     }
 
     handleInputChange = (e) => {
@@ -64,10 +78,29 @@ class Head extends Component {
             }
         } else {
             this.setState({ question: value });
+            if (value.length < 2) {
+                this.setState({ questionError: true });
+            } else {
+                this.setState({ questionError: false });
+            }
         }
     }
+
+    getErrors = () => {
+        let errors = [];
+        if (this.state.questionError) {
+            errors.push({errorMessage: 'Question is required!'});
+        }
+        if (this.state.optionsError) {
+            errors.push({errorMessage: 'At least 2 options are required!'});
+        }
+        return errors;
+    }
+
+    closePopup = () => {
+        this.setState({ errorPopup: false });
+    }
     render() {
-        const isSubmitted = this.state.submitted;
         return (
             <main className="head">
                 <h1 className="head__header">Create a free poll</h1>
@@ -81,13 +114,20 @@ class Head extends Component {
                         })
                     }
                     {
-                        isSubmitted ? (
-                            <button className="add-poll__button" type="submit">Create poll</button>
-                        ) : (
+                        this.state.submitted ? (
                             <p>Loading...</p>
+                        ) : (
+                            <button className="add-poll__button" type="submit">Create poll</button>
                         )
                     }
                 </form>
+                {
+                    this.state.errorPopup ? (
+                        <ErrorPopup onClick={this.closePopup} errors={this.getErrors()}/>
+                    ) : (
+                        ''
+                    )
+                }
             </main>
         )
     }
