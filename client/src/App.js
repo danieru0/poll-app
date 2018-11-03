@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Head from './components/Head/head';
 import Nav from './components/Nav/nav';
+import Poll from './components/Poll/poll';
 
 class App extends Component {
   render() {
@@ -11,6 +12,7 @@ class App extends Component {
             <Nav />
             <Switch>
               <Route exact path="/" component={Head}/>
+              <Route path="/:id" component={Poll}/>
             </Switch>
           </div>
       </BrowserRouter>

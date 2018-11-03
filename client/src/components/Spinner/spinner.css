@@ -1,8 +1,13 @@
 .spinner {
+    margin: 100px auto;
     width: 50px;
     height: 40px;
     text-align: center;
     font-size: 10px;
+  }
+
+  .head .spinner {
+    margin: 0;
     margin-top: 50px;
   }
   

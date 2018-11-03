@@ -10,7 +10,7 @@ const PollSchema = new Schema({
         votes: Number
     }],
     ips: [{
-        ip: Number
+        clientIP: String
     }]
 });
 

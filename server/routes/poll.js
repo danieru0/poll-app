@@ -11,8 +11,5 @@ module.exports = function(app) {
     app.route('/polls').post(pollsController.create);
 
     // PUT /polls/:id
-    app.route('/polls').put(pollsController.update);
-
-    // DELETE /polls/:id
-    app.route('/polls/:id').delete(pollsController.remove);
+    app.route('/polls/:id').put(pollsController.update);
 }
