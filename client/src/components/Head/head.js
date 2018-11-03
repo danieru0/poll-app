@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import ErrorPopup from '../errorPopup/error';
+import Spinner from '../Spinner/spinner';
 import './head.css';
 
 class Head extends Component {
@@ -31,7 +32,7 @@ class Head extends Component {
     
     handleSubmit = (e) => {
         e.preventDefault();
-        //this.setState({ submitted: true });
+        this.setState({ submitted: true });
         let options = [];
         for (let i = 0; i < this.state.optionsInputs.length; i++) {
             if (this.state.optionsInputs[i].text) {
@@ -49,9 +50,12 @@ class Head extends Component {
         if (!this.state.questionError && options.length >= 2) {
             axios.post('/polls', {
                 title: this.state.question,
-                pollOptions: options
+                pollOptions: options,
+                uniqueID: Date.now().toString(36) + Math.random().toString(36).substr(2)
             }).then((response) => {
-                console.log(response);
+                if (response.status === 201) {
+                    window.location.href = `/${response.data.data.uniqueID}`;
+                }
             });
         } else {
             this.setState({ errorPopup: true });
@@ -98,7 +102,7 @@ class Head extends Component {
     }
 
     closePopup = () => {
-        this.setState({ errorPopup: false });
+        this.setState({ errorPopup: false, submitted: false });
     }
     render() {
         return (
@@ -115,7 +119,7 @@ class Head extends Component {
                     }
                     {
                         this.state.submitted ? (
-                            <p>Loading...</p>
+                            <Spinner />
                         ) : (
                             <button className="add-poll__button" type="submit">Create poll</button>
                         )

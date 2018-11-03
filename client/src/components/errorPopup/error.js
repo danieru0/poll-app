@@ -9,9 +9,9 @@ class Error extends Component {
                 <div className="error">
                     <button onClick={this.props.onClick} className="error-btn">X</button>
                     {
-                        errors.map((item) => {
+                        errors.map((item, i) => {
                             return (
-                                <p className="error-message">{item.errorMessage}</p>
+                                <p key={i} className="error-message">{item.errorMessage}</p>
                             )
                         })
                     }

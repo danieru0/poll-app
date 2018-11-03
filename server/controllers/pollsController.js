@@ -18,11 +18,14 @@ module.exports = {
     },
 
     create: function(req, res) {
-        const poll = new Poll({
+        Poll.create({
             title: req.body.title,
-            pollOptions: req.body.pollOptions
-        }).save();
-        return res.status(201).send({ data: poll, message: 'Poll has been created.' });
+            pollOptions: req.body.pollOptions,
+            uniqueID: req.body.uniqueID
+        }, (err, poll) => {
+            if (err) throw err;
+            return res.status(201).send({ data: poll, message: 'Poll has been created.' });
+        });
     },
 
     update: function(req, res) {
