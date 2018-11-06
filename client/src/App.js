@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import Head from './components/Head/head';
 import Nav from './components/Nav/nav';
 import Poll from './components/Poll/poll';
+import Results from './components/Results/results';
 
 class App extends Component {
   render() {
@@ -12,6 +13,7 @@ class App extends Component {
             <Nav />
             <Switch>
               <Route exact path="/" component={Head}/>
+              <Route path="/:id/results" component={Results}/>
               <Route path="/:id" component={Poll}/>
             </Switch>
           </div>

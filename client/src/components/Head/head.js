@@ -30,6 +30,10 @@ class Head extends Component {
         }
     }
     
+    componentDidMount() {
+        document.title = 'Poll app';
+    }
+
     handleSubmit = (e) => {
         e.preventDefault();
         this.setState({ submitted: true });
