@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const Schema = mongoose.Schema;
 
 const PollSchema = new Schema({
@@ -13,5 +15,7 @@ const PollSchema = new Schema({
         clientIP: String
     }]
 });
+
+PollSchema.plugin(mongoosePaginate);
 
 module.exports = mongoose.model('Poll', PollSchema);

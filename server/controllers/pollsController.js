@@ -12,8 +12,14 @@ module.exports = {
     },
 
     findAll: function(req, res) {
-        Poll.find().then(poll => {
-            return res.status(200).send({ data: poll });
+        const options = {
+            page: parseInt(req.query.page),
+            limit: parseInt(req.query.limit) || null
+        }
+        Poll.paginate({}, options, function(err, result) {
+            if (err) throw err;
+            console.log(result.docs);
+            return res.status(200).send({ data: result });
         });
     },
 

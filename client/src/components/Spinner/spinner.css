@@ -10,7 +10,16 @@
     margin: 0;
     margin-top: 50px;
   }
+
+  .all .spinner > div {
+    background: #000000;
+  }
   
+.all__loading-more .spinner {
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
   .spinner > div {
     background-color: #333;
     height: 100%;
