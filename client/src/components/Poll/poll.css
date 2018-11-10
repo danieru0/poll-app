@@ -30,13 +30,18 @@
     margin-bottom: 40px;   
 }
 
+.poll__vote__date {
+    color: #8a8a8a;
+    position: relative;
+    top: 21px;
+}
+
 .poll__question {
     font-size: 30px;
     margin: 0;
     margin-top: 20px;
     margin-bottom: 20px;
     padding-left: 30px;
-    height: 50px;
     width: 100%;
     box-sizing: border-box;
     color: #000000;
@@ -132,6 +137,6 @@
 
 @media (max-width: 600px) {
     .poll__vote {
-        width: 100%;
+        width: 95%;
     }
 }

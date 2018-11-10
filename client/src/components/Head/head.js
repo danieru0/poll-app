@@ -75,14 +75,16 @@ class Head extends Component {
             option.text = value;
             pollOptions[name] = option;
             this.setState({ optionsInputs: pollOptions });
-            if (Number(name) === this.state.optionsInputs.length -1) {
-                let newInput = {
-                    id: this.state.optionsInputs.length,
-                    text: null
+            if (this.state.optionsInputs.length < 8) {
+                if (Number(name) === this.state.optionsInputs.length -1) {
+                    let newInput = {
+                        id: this.state.optionsInputs.length,
+                        text: null
+                    }
+                    this.setState({
+                        optionsInputs: [...this.state.optionsInputs, newInput]
+                    });
                 }
-                this.setState({
-                    optionsInputs: [...this.state.optionsInputs, newInput]
-                });
             }
         } else {
             this.setState({ question: value });

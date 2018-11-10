@@ -11,6 +11,7 @@ class Poll extends Component {
             question: null,
             pollOptions: null,
             clickedOption: null,
+            date: null,
             ips: null,
             clientIP: null,
             errorPopup: false
@@ -26,7 +27,8 @@ class Poll extends Component {
                 question: data.title,
                 pollOptions: data.pollOptions,
                 ips: data.ips,
-                uniqueID: data.uniqueID
+                uniqueID: data.uniqueID,
+                date: data.date
             });
         }).catch((error) => {
             if (error.response.status === 404) {
@@ -99,6 +101,7 @@ class Poll extends Component {
                         <button type="submit" className="poll__vote__btn-vote">Vote</button>
                         <button onClick={this.showResults} className="poll__vote__btn-result">Results</button>
                     </div>
+                    <span className="poll__vote__date">{this.state.date ? this.state.date.substring(0, this.state.date.indexOf("T")) : ''}</span>
                 </form>
                 {
                     this.state.errorPopup ? (

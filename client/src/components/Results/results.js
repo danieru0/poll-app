@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Spinner from '../Spinner/spinner';
+import { Pie } from 'react-chartjs-2';
 import './results.css';
+
 
 class Results extends Component {
     constructor() {
@@ -9,7 +11,15 @@ class Results extends Component {
         this.state = {
             question: null,
             pollOptions: null,
-            totalVotes: 0
+            totalVotes: 0,
+            uniqueID: null,
+            date: null,
+            chartData: {
+                labels: [],
+                datasets: [{
+                    data: []
+                }]
+            }
         }
     }
 
@@ -18,11 +28,21 @@ class Results extends Component {
         axios.get('/polls/'+id).then((response) => {
             let data = response.data.data,
                 totalVotes = 0,
-                calculatedVotes = [];
+                calculatedVotes = [],
+                chartData = {
+                    labels: [],
+                    datasets: [{
+                        data: [],
+                        backgroundColor: []
+                    }]
+                };
             document.title = data.title;
-            //calculate total votes
+            //calculate total votes and create data for chart
             for (let i = 0; i < data.pollOptions.length; i++) {
                 totalVotes += data.pollOptions[i].votes;
+                chartData.labels.push(data.pollOptions[i].text);
+                chartData.datasets[0].data.push(data.pollOptions[i].votes);
+                chartData.datasets[0].backgroundColor.push('#' +  Math.random().toString(16).substr(-6));
             }
 
             //calculate percentage of votes
@@ -44,9 +64,12 @@ class Results extends Component {
                 question: data.title,
                 pollOptions: sortedVotes,
                 totalVotes: totalVotes,
-                uniqueID: data.uniqueID
+                uniqueID: data.uniqueID,
+                date: data.date,
+                chartData: chartData
             });
         }).catch((error) => {
+            console.log(error);
             if (error.response.status === 404) {
                 window.location.href = '/';
             }
@@ -87,7 +110,16 @@ class Results extends Component {
                             <p className="results__total-votes">{this.state.totalVotes} <span>Votes</span></p>
                             <button onClick={this.showVotes} className="results__vote-btn">Vote</button>
                         </div>
+                        <span className="results__date">{this.state.date ? this.state.date.substring(0, this.state.date.indexOf("T")) : ''}</span>
                     </div>
+                    {
+                            
+                        this.state.totalVotes > 0 ? (
+                            <div className="results__chart">
+                                <Pie options={{maintainAspectRadio: false}} data={this.state.chartData} />
+                            </div>
+                        ) : ''
+                    }
                 </div>
             </div>
         )

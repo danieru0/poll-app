@@ -16,11 +16,11 @@ class All extends Component {
     getPolls() {
         axios.get(`/polls?page=${this.state.page}&limit=2`).then((response) => {
             let statePolls = this.state.polls;
-            for (let i = 0; i < response.data.data.docs.length; i++) {
+            for (let i = 0; i < response.data.data.length; i++) {
                 statePolls.push({
-                    title: response.data.data.docs[i].title,
-                    date: response.data.data.docs[i].date,
-                    uniqueID: response.data.data.docs[i].uniqueID
+                    title: response.data.data[i].title,
+                    date: response.data.data[i].date,
+                    uniqueID: response.data.data[i].uniqueID
                 });
             }
             this.setState({
@@ -32,6 +32,7 @@ class All extends Component {
     }
 
     componentDidMount() {
+        document.title = 'All polls'
         this.getPolls();
     }
 
@@ -46,12 +47,12 @@ class All extends Component {
             <div className="all">
                 <h1 className="all__header">All polls</h1>
                     {
-                        this.state.polls ? (
+                        this.state.polls.length > 0 ? (
                             this.state.polls.map((item) => {
                                 return (
-                                    <a href={`/${item.uniqueID}`} key={item.uniqueID} className="all__poll">
+                                    <a title={item.title} href={`/${item.uniqueID}`} key={item.uniqueID} className="all__poll">
                                         <div className="poll__title">
-                                            <p>{item.title}</p>
+                                            <p>{item.title.length > 55 ? item.title.substring(0, 55)+'...' : item.title}</p>
                                         </div>
                                         <p className="poll__date">{item.date.substring(0, item.date.indexOf("T"))}</p>
                                     </a>                              

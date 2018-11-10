@@ -18,8 +18,7 @@ module.exports = {
         }
         Poll.paginate({}, options, function(err, result) {
             if (err) throw err;
-            console.log(result.docs);
-            return res.status(200).send({ data: result });
+            return res.status(200).send({ data: result.docs });
         });
     },
 

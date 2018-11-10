@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/pollapp', {useNewUrlParser: true});
+mongoose.connection.on('error', (err) => {
+    console.log('Could not connect to the database. Exiting now...');
+    process.exit();
+});
 
 const app = express();
 

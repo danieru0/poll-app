@@ -80,7 +80,7 @@
 
 @media (max-width: 600px) {
     .all__poll {
-        width: 100%;
+        width: 90%;
         box-sizing: border-box;
     }
 }
