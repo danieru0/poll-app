@@ -9,12 +9,14 @@ class All extends Component {
         this.state = {
             polls: [],
             page: 1,
-            loading: false
+            loading: false,
+            changingOrder: false,
+            order: false
         }
     }
 
     getPolls() {
-        axios.get(`/polls?page=${this.state.page}&limit=2`).then((response) => {
+        axios.get(`/polls?page=${this.state.page}&limit=2&sort=${this.state.order}`).then((response) => {
             let statePolls = this.state.polls;
             for (let i = 0; i < response.data.data.length; i++) {
                 statePolls.push({
@@ -26,7 +28,8 @@ class All extends Component {
             this.setState({
                 polls: statePolls,
                 page: this.state.page+1,
-                loading: false
+                loading: false,
+                changingOrder: false
             });
         });
     }
@@ -42,10 +45,21 @@ class All extends Component {
         });
         this.getPolls();
     }
+
+    changeOrder = (e) => {
+        if (!this.state.changingOrder) {
+            this.setState({ order: e.target.value, polls: [], page: 1, changingOrder: true }, () => this.getPolls());
+        }
+    }
     render() {
         return (
             <div className="all">
                 <h1 className="all__header">All polls</h1>
+                <div className="all__container">
+                    <div className="all__buttons">
+                        <button onClick={this.changeOrder} value={true}>oldest</button>
+                        <button onClick={this.changeOrder} value={false}>newest</button>
+                    </div>
                     {
                         this.state.polls.length > 0 ? (
                             this.state.polls.map((item) => {
@@ -62,6 +76,7 @@ class All extends Component {
                             <Spinner />
                         )
                     }
+                </div>
                     {
                         this.state.loading ? (
                             <div className="all__loading-more"><Spinner /></div>

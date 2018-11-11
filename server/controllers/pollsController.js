@@ -12,9 +12,11 @@ module.exports = {
     },
 
     findAll: function(req, res) {
+        let isTrue = req.query.sort === 'true';
         const options = {
             page: parseInt(req.query.page),
-            limit: parseInt(req.query.limit) || null
+            limit: parseInt(req.query.limit) || null,
+            sort: { date: isTrue ? 1 : -1}
         }
         Poll.paginate({}, options, function(err, result) {
             if (err) throw err;

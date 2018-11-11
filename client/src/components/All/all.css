@@ -19,6 +19,28 @@
     text-align: center;
 }
 
+.all__container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 600px;
+}
+
+.all__buttons {
+    display: flex;
+    align-self: flex-end;
+}
+
+.all__buttons button {
+    background: #282828;
+    border: 1px solid #000000;
+    padding: 4px;
+    color: #929292;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+}
+
 .all__poll {
     width: 600px;
     height: 100px;
@@ -82,5 +104,8 @@
     .all__poll {
         width: 90%;
         box-sizing: border-box;
+    }
+    .all__container {
+        width: 100%;
     }
 }
