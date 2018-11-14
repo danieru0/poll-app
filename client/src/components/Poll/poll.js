@@ -55,14 +55,16 @@ class Poll extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         if (this.state.clickedOption) {
-            axios.put('/polls/'+this.props.match.params.id, {
-                clickedOption: this.state.clickedOption,
-                clientIP: this.state.clientIP
-            }).then((response) => {
-                if (response.status === 201) {
-                    window.location.href = `/${this.state.uniqueID}/results`;
-                }
-            })
+            if (this.state.clientIP) {
+                axios.put('/polls/'+this.props.match.params.id, {
+                    clickedOption: this.state.clickedOption,
+                    clientIP: this.state.clientIP
+                }).then((response) => {
+                    if (response.status === 201) {
+                        window.location.href = `/${this.state.uniqueID}/results`;
+                    }
+                })
+            }
         } else {
             this.setState({ errorPopup: true });
         }

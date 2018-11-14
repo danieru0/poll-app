@@ -20,4 +20,29 @@ Create your own polls!
 
 ## How to run locally
 
-later...
+1. Download repository
+```
+$ git clone https://github.com/elosiktv/poll-app.git
+```
+2. Go to app folder
+```
+$ cd poll-app
+```
+3. Install dependencies for server and client
+```
+$ cd server
+$ npm install
+$ cd..
+$ cd client
+$ npm install
+```
+4. Run MongoDB database
+5. Run app
+```
+$ cd server
+$ node server.js / nodemon
+$ cd..
+$ cd client
+$ npm start
+```
+6.  It's working!

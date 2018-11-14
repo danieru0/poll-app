@@ -16,7 +16,7 @@ class All extends Component {
     }
 
     getPolls() {
-        axios.get(`/polls?page=${this.state.page}&limit=2&sort=${this.state.order}`).then((response) => {
+        axios.get(`/polls?page=${this.state.page}&limit=4&sort=${this.state.order}`).then((response) => {
             let statePolls = this.state.polls;
             for (let i = 0; i < response.data.data.length; i++) {
                 statePolls.push({
