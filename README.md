@@ -1,7 +1,7 @@
 # poll app
 
 Create your own polls!
-(gif here)
+![Poll app gif](https://i.imgur.com/Uv51jw1.gif)
 
 ## Features
 
